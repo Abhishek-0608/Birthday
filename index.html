@@ -259,7 +259,7 @@
       margin-bottom: 1.5rem;
     }
 
-    /* Polaroids Flow */
+    /* Polaroids Flow & Clickable Interactive Elements */
     .gallery-grid {
       display: flex;
       flex-direction: column;
@@ -285,6 +285,50 @@
       text-align: center;
       position: relative;
       border: 1px solid rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      user-select: none;
+    }
+
+    .polaroid:active {
+      transform: scale(0.96) !important;
+    }
+
+    /* Click Effect: Heart Pulse Animation */
+    .pulse-effect {
+      animation: polaroidPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes polaroidPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08) rotate(1deg); box-shadow: 0 15px 30px rgba(183, 93, 105, 0.35); }
+      100% { transform: scale(1); }
+    }
+
+    .tap-hint {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--rose);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 3px;
+      opacity: 0.8;
+      text-transform: uppercase;
+    }
+
+    /* Floating Tap Hearts */
+    .floating-heart {
+      position: fixed;
+      font-size: 24px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: floatHeart 1s ease-out forwards;
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+      50% { transform: translate(-50%, -100px) scale(1.4) rotate(15deg); opacity: 0.9; }
+      100% { transform: translate(-50%, -160px) scale(1) rotate(-15deg); opacity: 0; }
     }
 
     .polaroid img {
@@ -294,6 +338,7 @@
       border-radius: 2px;
       background: #f0ebe1;
       display: block;
+      transition: filter 0.3s ease;
     }
 
     @media (min-width: 650px) {
@@ -458,31 +503,34 @@
     <!-- PAGE 2: The Photo Timeline -->
     <div class="book-page" id="page2">
       <h2 class="timeline-title">From Little Steps to Now 🌸</h2>
-      <p class="timeline-subtitle">Every chapter of you gets brighter and brighter.</p>
+      <p class="timeline-subtitle">Tap any photo for a little love spark ✨</p>
       
       <div class="gallery-grid">
         <!-- Childhood Polaroid -->
-        <div class="polaroid">
+        <div class="polaroid" onclick="popPhoto(event, this)">
           <div class="washi-tape"></div>
           <img src="./childhood.jpeg" alt="Childhood Memory">
           <span class="sticker-badge">🧸</span>
           <p class="caption">Baby days & sweet smiles ✨</p>
+          <span class="tap-hint">Tap me 💕</span>
         </div>
 
         <!-- Growing Up Polaroid -->
-        <div class="polaroid">
+        <div class="polaroid" onclick="popPhoto(event, this)">
           <div class="washi-tape"></div>
           <img src="./growing.jpeg" alt="Growing Up Memory">
           <span class="sticker-badge">🌿</span>
           <p class="caption">Growing brighter every day 💫</p>
+          <span class="tap-hint">Tap me 💕</span>
         </div>
 
         <!-- Present Day Polaroid -->
-        <div class="polaroid">
+        <div class="polaroid" onclick="popPhoto(event, this)">
           <div class="washi-tape"></div>
           <img src="./present.jpeg" alt="Present Day Memory">
           <span class="sticker-badge">👑</span>
           <p class="caption">The wonderful you today 💖</p>
+          <span class="tap-hint">Tap me 💕</span>
         </div>
       </div>
 
@@ -531,6 +579,36 @@
       });
       document.getElementById('page' + pageNumber).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Interactive Photo Tap: Heart Burst & Pulse Animation
+    function popPhoto(e, element) {
+      element.classList.remove('pulse-effect');
+      void element.offsetWidth; // Force reflow
+      element.classList.add('pulse-effect');
+
+      // Mini Confetti burst around the photo
+      const rect = element.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+      confetti({
+        particleCount: 22,
+        spread: 45,
+        origin: { x: x, y: y },
+        colors: ['#ff4d6d', '#ff758f', '#c69a53', '#ffffff']
+      });
+
+      // Floating Heart Emoji Spawn
+      const hearts = ['💖', '✨', '🌸', '🫶', '💕'];
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = (e.clientX || (rect.left + rect.width / 2)) + 'px';
+      heart.style.top = (e.clientY || (rect.top + rect.height / 2)) + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 1000);
     }
 
     function triggerPartyPoppers() {
