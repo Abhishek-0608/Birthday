@@ -7,18 +7,22 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Poppins:wght@400;500;600&family=Shrikhand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Poppins:wght@400;500;600&family=Shrikhand&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --cream: #faf5ee;
-      --paper: #fbf7f0;
-      --rose: #b75d69;
-      --rose-dark: #8c3b47;
-      --rose-light: #e8a598;
-      --gold: #c69a53;
-      --text: #423229;
+      --cream: #fdfbf7;
+      --paper: #fcf6ec;
+      --paper-dark: #f3e9d7;
+      --rose: #c06371;
+      --rose-dark: #822b39;
+      --rose-light: #f3c2ba;
+      --gold: #d4a359;
+      --gold-dark: #a67c38;
+      --wood: #1d1413;
+      --text: #3c2a26;
+      --shadow: rgba(60, 20, 25, 0.25);
     }
 
     * {
@@ -29,136 +33,182 @@
     }
 
     body {
-      background: radial-gradient(circle at center, #2e2425 0%, #151011 100%);
+      background: radial-gradient(circle at center, #2e1d21 0%, #160c0e 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 1.2rem 0.75rem 2.5rem;
+      padding: 1.5rem 0.8rem 3rem;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* Ambient Falling Petals */
+    /* Ambient Warm Fairy Lights */
+    .fairy-lights {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 35px;
+      display: flex;
+      justify-content: space-around;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .light-bulb {
+      width: 10px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffe5a3;
+      box-shadow: 0 0 12px 3px #ffd778;
+      animation: twinkle 2.5s ease-in-out infinite alternate;
+    }
+    .light-bulb:nth-child(2n) { animation-delay: 0.8s; background: #ffc4d0; box-shadow: 0 0 12px 3px #ff9bb0; }
+    .light-bulb:nth-child(3n) { animation-delay: 1.6s; background: #fff0d4; box-shadow: 0 0 12px 3px #ffe099; }
+
+    @keyframes twinkle {
+      0% { opacity: 0.4; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1.15); }
+    }
+
+    /* Floating Petals & Stars */
     .petal {
       position: fixed;
       top: -10%;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       user-select: none;
       pointer-events: none;
       animation: drift linear infinite;
       z-index: 1;
-      opacity: 0.45;
-    }
-
-    @media (max-width: 600px) {
-      .petal:nth-child(2), .petal:nth-child(3) { display: none; }
+      opacity: 0.6;
     }
 
     @keyframes drift {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
+      0% { transform: translateY(0) rotate(0deg) translateX(0); }
+      50% { transform: translateY(50vh) rotate(180deg) translateX(25px); }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); }
     }
 
-    /* Rising Balloons */
+    /* Floating Balloons */
     .balloon {
       position: fixed;
-      bottom: -100px;
-      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
-      animation: floatUp 8.5s ease-in infinite;
+      bottom: -120px;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      animation: floatUp 9s ease-in infinite;
       z-index: 2;
       pointer-events: none;
-      opacity: 0.8;
+      opacity: 0.85;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
     }
 
-    .b-left-1 { left: 2%; animation-delay: 0s; }
-    .b-right-1 { right: 2%; animation-delay: 2s; }
+    .b-left-1 { left: 3%; animation-delay: 0s; }
+    .b-right-1 { right: 3%; animation-delay: 2.2s; }
 
     @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.85; }
       100% { transform: translateY(-115vh) rotate(20deg); opacity: 0; }
     }
 
-    /* Main Container */
+    /* Desk Center Stage */
     .desk {
       width: 100%;
-      max-width: 760px;
+      max-width: 780px;
       position: relative;
       z-index: 10;
-      margin: auto;
+      margin: 1.5rem auto auto;
     }
 
-    /* Scrapbook Page Container */
+    /* Vintage Book / Scrapbook Board */
     .book-page {
       display: none;
       width: 100%;
       background: var(--paper);
       background-image: 
-        radial-gradient(#e5dbcb 1px, transparent 1px),
-        linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
-      background-size: 20px 20px, 100% 26px;
-      border-radius: 16px;
-      padding: 1.8rem 1.1rem;
+        radial-gradient(#e5d8c3 1.2px, transparent 1.2px),
+        linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+      background-size: 22px 22px, 100% 28px;
+      border-radius: 20px;
+      padding: clamp(1.8rem, 4vw, 2.8rem) clamp(1.2rem, 3.5vw, 2.4rem);
       box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.45),
-        inset 0 0 30px rgba(183, 93, 105, 0.05);
-      border: 1px solid rgba(198, 154, 83, 0.4);
-      animation: flipIn 0.5s ease-out forwards;
+        0 20px 45px rgba(0, 0, 0, 0.6),
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        inset 0 0 50px rgba(192, 99, 113, 0.08);
+      border: 2px solid rgba(212, 163, 89, 0.5);
+      position: relative;
+      animation: pageOpen 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .book-page.active {
       display: block;
     }
 
-    @keyframes flipIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes pageOpen {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
+
+    /* Ornate Gold Filigree Corners */
+    .filigree-corner {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+    .fc-tl { top: 12px; left: 12px; border-top: 3px double var(--gold); border-left: 3px double var(--gold); border-top-left-radius: 12px; }
+    .fc-tr { top: 12px; right: 12px; border-top: 3px double var(--gold); border-right: 3px double var(--gold); border-top-right-radius: 12px; }
+    .fc-bl { bottom: 12px; left: 12px; border-bottom: 3px double var(--gold); border-left: 3px double var(--gold); border-bottom-left-radius: 12px; }
+    .fc-br { bottom: 12px; right: 12px; border-bottom: 3px double var(--gold); border-right: 3px double var(--gold); border-bottom-right-radius: 12px; }
 
     /* Page 1: Cover Page */
     .cover-style {
       text-align: center;
-      min-height: 480px;
+      min-height: 520px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border-left: 12px solid #7d4928;
-      border-radius: 10px 16px 16px 10px;
+      border-left: clamp(14px, 3vw, 22px) solid #6a341e;
+      border-radius: 12px 20px 20px 12px;
       position: relative;
-      padding: 3rem 1.2rem;
+      padding: 3.2rem 1.4rem;
     }
 
-    .cover-ribbon {
+    .vintage-stamp {
       position: absolute;
-      top: 14px;
-      right: 14px;
-      background: var(--gold);
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 600;
+      top: 18px;
+      right: 18px;
+      background: #fdfaf3;
+      border: 2px dashed var(--rose);
+      color: var(--rose-dark);
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
       letter-spacing: 1px;
-      padding: 0.3rem 0.75rem;
-      border-radius: 50px;
+      transform: rotate(6deg);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
       text-transform: uppercase;
     }
 
     .title-box {
       position: relative;
       display: inline-block;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.6rem;
       width: 100%;
     }
 
     .main-title {
       font-family: 'Shrikhand', cursive;
-      font-size: clamp(2.4rem, 8.5vw, 4.2rem);
+      font-size: clamp(2.5rem, 8.5vw, 4.4rem);
       line-height: 1.15;
       color: var(--rose-dark);
       letter-spacing: 1px;
       position: relative;
-      word-break: break-word;
-      text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.9);
+      text-shadow: 
+        2px 2px 0px rgba(255, 255, 255, 0.9),
+        0 0 20px rgba(157, 226, 255, 0.35);
       animation: stormFlicker 4.5s infinite alternate;
     }
 
@@ -167,10 +217,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 110%;
-      height: 130%;
-      background: radial-gradient(circle, rgba(157, 226, 255, 0.5) 0%, transparent 70%);
-      filter: blur(8px);
+      width: 115%;
+      height: 135%;
+      background: radial-gradient(circle, rgba(157, 226, 255, 0.55) 0%, transparent 70%);
+      filter: blur(10px);
       pointer-events: none;
       opacity: 0;
       animation: flashStrike 5s infinite;
@@ -178,36 +228,49 @@
 
     .subtitle {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 3vw, 1.25rem);
+      font-size: clamp(1.1rem, 3.2vw, 1.35rem);
       font-style: italic;
       color: #5c4238;
-      margin-top: 0.5rem;
+      margin-top: 0.4rem;
     }
 
-    /* Wax Seal Button */
+    .cover-quote {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      color: var(--gold-dark);
+      margin-top: 0.8rem;
+    }
+
+    /* 3D Wax Seal Latch */
     .wax-seal {
       margin-top: 2rem;
-      background: radial-gradient(circle, #b83b4b 0%, #821c2a 100%);
-      color: #ffd6dc;
-      width: 80px;
-      height: 80px;
+      background: radial-gradient(circle at 35% 35%, #ca4354 0%, #871c2b 100%);
+      color: #ffe6eb;
+      width: 86px;
+      height: 86px;
       border-radius: 50%;
-      border: 3px dashed rgba(255, 214, 220, 0.4);
+      border: 3px dashed rgba(255, 230, 235, 0.4);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(130, 28, 42, 0.45);
-      transition: transform 0.2s ease;
+      box-shadow: 
+        0 8px 25px rgba(135, 28, 43, 0.55),
+        inset 0 2px 6px rgba(255,255,255,0.4);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .wax-seal:hover {
+      transform: scale(1.08) rotate(4deg);
     }
 
     .wax-seal:active {
-      transform: scale(0.94);
+      transform: scale(0.95);
     }
 
     .wax-seal span {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       line-height: 1;
     }
 
@@ -219,52 +282,57 @@
       text-transform: uppercase;
     }
 
-    /* Shared Buttons */
+    /* Buttons */
     .scrap-btn {
       width: 100%;
-      max-width: 280px;
+      max-width: 290px;
       margin: 1.8rem auto 0;
-      padding: 0.85rem 1.6rem;
+      padding: 0.9rem 1.8rem;
       background: linear-gradient(135deg, var(--rose), var(--rose-dark));
-      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.25);
       color: #fff;
       border-radius: 50px;
       font-size: 0.95rem;
       font-weight: 600;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 6px 16px rgba(183, 93, 105, 0.35);
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px rgba(192, 99, 113, 0.35);
       cursor: pointer;
       display: block;
+    }
+
+    .scrap-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(192, 99, 113, 0.5);
     }
 
     .scrap-btn:active {
       transform: scale(0.97);
     }
 
-    /* Titles & Subtitles */
+    /* Page Titles */
     .timeline-title {
       font-family: 'Playfair Display', serif;
       color: var(--rose-dark);
       text-align: center;
-      font-size: clamp(1.4rem, 5vw, 2rem);
-      margin-bottom: 0.4rem;
+      font-size: clamp(1.5rem, 5.2vw, 2.2rem);
+      margin-bottom: 0.3rem;
     }
 
     .timeline-subtitle {
       text-align: center;
-      font-size: 0.88rem;
-      color: #7d6b5c;
-      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: #725b52;
+      margin-bottom: 1.6rem;
     }
 
-    /* Polaroids Flow & Clickable Interactive Elements */
+    /* Polaroids Scrapbook Layout */
     .gallery-grid {
       display: flex;
       flex-direction: column;
       gap: 2.2rem;
-      max-width: 320px;
+      max-width: 340px;
       margin: 1.2rem auto 0.5rem;
     }
 
@@ -273,36 +341,97 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         max-width: 100%;
-        gap: 1.2rem;
+        gap: 1.4rem;
       }
     }
 
     .polaroid {
-      background: #fff;
+      background: #ffffff;
       padding: 12px 12px 20px;
-      border-radius: 4px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      box-shadow: 
+        0 10px 22px rgba(0,0,0,0.12),
+        0 2px 6px rgba(0,0,0,0.06);
       text-align: center;
       position: relative;
       border: 1px solid rgba(0,0,0,0.06);
       cursor: pointer;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
       user-select: none;
+    }
+
+    .polaroid:nth-child(1) { transform: rotate(-2deg); }
+    .polaroid:nth-child(2) { transform: rotate(2.5deg); }
+    .polaroid:nth-child(3) { transform: rotate(-1.5deg); }
+
+    .polaroid:hover {
+      transform: scale(1.05) rotate(0deg) !important;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.22);
+      z-index: 10;
     }
 
     .polaroid:active {
       transform: scale(0.96) !important;
     }
 
-    /* Click Effect: Heart Pulse Animation */
     .pulse-effect {
       animation: polaroidPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes polaroidPop {
       0% { transform: scale(1); }
-      50% { transform: scale(1.08) rotate(1deg); box-shadow: 0 15px 30px rgba(183, 93, 105, 0.35); }
+      50% { transform: scale(1.08) rotate(1deg); box-shadow: 0 16px 32px rgba(192, 99, 113, 0.4); }
       100% { transform: scale(1); }
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 3px;
+      background: #f0ebe1;
+      display: block;
+    }
+
+    @media (min-width: 650px) {
+      .polaroid img {
+        height: 190px;
+      }
+    }
+
+    /* Washi Tape Texture with torn edges */
+    .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 32%;
+      width: 70px;
+      height: 22px;
+      background: rgba(243, 194, 186, 0.9);
+      border-left: 3px dashed rgba(255,255,255,0.7);
+      border-right: 3px dashed rgba(255,255,255,0.7);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      transform: rotate(-3deg);
+    }
+
+    .tape-gold {
+      background: rgba(212, 163, 89, 0.8);
+      transform: rotate(3deg);
+    }
+
+    .sticker-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      font-size: 1.3rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+    }
+
+    .caption {
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      color: #333;
+      margin-top: 10px;
+      font-weight: 700;
     }
 
     .tap-hint {
@@ -312,134 +441,112 @@
       font-weight: 600;
       letter-spacing: 0.5px;
       margin-top: 3px;
-      opacity: 0.8;
+      opacity: 0.85;
       text-transform: uppercase;
     }
 
-    /* Floating Tap Hearts */
+    /* Floating Heart Emojis */
     .floating-heart {
       position: fixed;
-      font-size: 24px;
+      font-size: 26px;
       pointer-events: none;
       z-index: 9999;
       animation: floatHeart 1s ease-out forwards;
     }
 
     @keyframes floatHeart {
-      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-      50% { transform: translate(-50%, -100px) scale(1.4) rotate(15deg); opacity: 0.9; }
-      100% { transform: translate(-50%, -160px) scale(1) rotate(-15deg); opacity: 0; }
-    }
-
-    .polaroid img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 2px;
-      background: #f0ebe1;
-      display: block;
-      transition: filter 0.3s ease;
-    }
-
-    @media (min-width: 650px) {
-      .polaroid img {
-        height: 180px;
-      }
-    }
-
-    .washi-tape {
-      position: absolute;
-      top: -10px;
-      left: 35%;
-      width: 60px;
-      height: 18px;
-      background: rgba(232, 165, 152, 0.85);
-      border-left: 2px dashed rgba(255,255,255,0.6);
-      border-right: 2px dashed rgba(255,255,255,0.6);
-    }
-
-    .sticker-badge {
-      position: absolute;
-      bottom: 6px;
-      right: 8px;
-      font-size: 1.2rem;
-    }
-
-    .caption {
-      font-family: 'Caveat', cursive;
-      font-size: 1.25rem;
-      color: #333;
-      margin-top: 10px;
+      0% { transform: translate(-50%, -50%) scale(0.4); opacity: 1; }
+      50% { transform: translate(-50%, -90px) scale(1.3) rotate(15deg); opacity: 0.9; }
+      100% { transform: translate(-50%, -150px) scale(1) rotate(-15deg); opacity: 0; }
     }
 
     /* Page 3: Mini Game */
     .game-board {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      max-width: 290px;
+      gap: 12px;
+      max-width: 310px;
       margin: 1.5rem auto;
     }
 
     .card-tile {
       aspect-ratio: 1;
-      background: linear-gradient(135deg, #eaddc7 0%, #dfd0b5 100%);
+      background: linear-gradient(135deg, #eee3d1 0%, #decbb1 100%);
       border: 2px solid var(--gold);
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       user-select: none;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-      transition: background 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.25s, background 0.25s;
+    }
+
+    .card-tile:hover {
+      transform: translateY(-2px);
     }
 
     .card-tile.flipped {
       background: #ffffff;
+      transform: rotateY(180deg);
     }
 
-    /* Page 4: Bible Verse & Letter */
+    /* Page 4: Bible Verse Ribbon & Fountain Pen Letter */
     .bible-verse-box {
-      background: rgba(255, 255, 255, 0.9);
-      border-left: 3px solid var(--rose);
-      border-right: 3px solid var(--rose);
-      padding: 1.1rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.4rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(253, 247, 237, 0.95));
+      border-left: 4px solid var(--rose);
+      border-right: 4px solid var(--rose);
+      padding: 1.3rem 1.2rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 0.95rem;
+      font-size: clamp(0.98rem, 2.5vw, 1.12rem);
       color: var(--rose-dark);
-      line-height: 1.6;
+      line-height: 1.7;
       text-align: center;
+      box-shadow: 0 4px 15px rgba(192, 99, 113, 0.08);
+      position: relative;
     }
 
     .bible-verse-ref {
       display: block;
-      margin-top: 0.4rem;
+      margin-top: 0.5rem;
       font-family: 'Poppins', sans-serif;
       font-style: normal;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 1px;
-      color: var(--gold);
+      letter-spacing: 1.5px;
+      color: var(--gold-dark);
       text-transform: uppercase;
     }
 
     .letter-body {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 1.4rem 1.1rem;
+      background: #ffffff;
+      padding: 1.6rem 1.3rem;
       border-radius: 12px;
       font-family: 'Caveat', cursive;
-      font-size: 1.25rem;
-      line-height: 1.7;
+      font-size: clamp(1.25rem, 3vw, 1.45rem);
+      line-height: 1.75;
       color: var(--text);
-      border: 1px dashed var(--rose);
-      margin-bottom: 1.2rem;
+      border: 2px dashed rgba(192, 99, 113, 0.35);
+      margin-bottom: 1.4rem;
       text-align: left;
       min-height: 220px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .letter-stamp {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4rem;
+      color: var(--rose);
+      opacity: 0.7;
     }
 
     .btn-group {
@@ -453,21 +560,21 @@
     @keyframes stormFlicker {
       0%, 88%, 93%, 100% {
         color: var(--rose-dark);
-        text-shadow: 2px 2px 0px rgba(255,255,255,0.8), 0 0 10px rgba(157, 226, 255, 0.2);
+        text-shadow: 2px 2px 0px rgba(255,255,255,0.8), 0 0 12px rgba(157, 226, 255, 0.2);
       }
       90% {
         color: #ffffff;
-        text-shadow: 0 0 20px #9de2ff, 0 0 40px #9de2ff;
+        text-shadow: 0 0 22px #9de2ff, 0 0 45px #9de2ff;
       }
       92% {
         color: var(--rose-dark);
-        text-shadow: 0 0 6px rgba(157, 226, 255, 0.3);
+        text-shadow: 0 0 8px rgba(157, 226, 255, 0.3);
       }
     }
 
     @keyframes flashStrike {
       0%, 89%, 94%, 100% { opacity: 0; }
-      90% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+      90% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
       91% { opacity: 0.2; }
       92% { opacity: 0.85; }
     }
@@ -475,24 +582,45 @@
 </head>
 <body>
 
-  <!-- Ambient Elements -->
-  <div class="petal" style="left: 10%; animation-duration: 8s; animation-delay: 0s;">🌸</div>
-  <div class="petal" style="left: 85%; animation-duration: 10s; animation-delay: 1s;">✨</div>
+  <!-- Ambient Fairy Lights -->
+  <div class="fairy-lights">
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+    <div class="light-bulb"></div>
+  </div>
+
+  <!-- Falling Ambient Blossoms -->
+  <div class="petal" style="left: 8%; animation-duration: 8s; animation-delay: 0s;">🌸</div>
+  <div class="petal" style="left: 28%; animation-duration: 11s; animation-delay: 2s;">✨</div>
+  <div class="petal" style="left: 72%; animation-duration: 9s; animation-delay: 4s;">🌸</div>
+  <div class="petal" style="left: 90%; animation-duration: 10s; animation-delay: 1s;">✨</div>
 
   <!-- Rising Balloons -->
   <div class="balloon b-left-1">🎈</div>
-  <div class="balloon b-right-1">🌸</div>
+  <div class="balloon b-right-1">💖</div>
 
   <div class="desk">
 
     <!-- PAGE 1: The Vintage Cover -->
     <div class="book-page cover-style active" id="page1">
-      <div class="cover-ribbon">Special Day ✨</div>
+      <div class="filigree-corner fc-tl"></div>
+      <div class="filigree-corner fc-tr"></div>
+      <div class="filigree-corner fc-bl"></div>
+      <div class="filigree-corner fc-br"></div>
+
+      <div class="vintage-stamp">Memories ✨</div>
+
       <div class="title-box">
         <div class="lightning"></div>
         <h1 class="main-title">HY Jenieeeee</h1>
       </div>
+
       <p class="subtitle">Chapter One: The First Spark</p>
+      <p class="cover-quote">A timeless story made just for you...</p>
       
       <div class="wax-seal" onclick="nextPage(2)">
         <span>💌</span>
@@ -502,6 +630,11 @@
 
     <!-- PAGE 2: The Photo Timeline -->
     <div class="book-page" id="page2">
+      <div class="filigree-corner fc-tl"></div>
+      <div class="filigree-corner fc-tr"></div>
+      <div class="filigree-corner fc-bl"></div>
+      <div class="filigree-corner fc-br"></div>
+
       <h2 class="timeline-title">From Little Steps to Now 🌸</h2>
       <p class="timeline-subtitle">Tap any photo for a little love spark ✨</p>
       
@@ -517,7 +650,7 @@
 
         <!-- Growing Up Polaroid -->
         <div class="polaroid" onclick="popPhoto(event, this)">
-          <div class="washi-tape"></div>
+          <div class="washi-tape tape-gold"></div>
           <img src="./growing.jpeg" alt="Growing Up Memory">
           <span class="sticker-badge">🌿</span>
           <p class="caption">Growing brighter every day 💫</p>
@@ -539,8 +672,13 @@
 
     <!-- PAGE 3: Memory Match Mini-Game -->
     <div class="book-page" id="page3" style="text-align: center;">
+      <div class="filigree-corner fc-tl"></div>
+      <div class="filigree-corner fc-tr"></div>
+      <div class="filigree-corner fc-bl"></div>
+      <div class="filigree-corner fc-br"></div>
+
       <h2 class="timeline-title">Unlock Your Birthday Note 🎁</h2>
-      <p style="font-size: 0.88rem; color: #666; margin-bottom: 0.8rem;">Find all matching stickers to unlock the secret letter!</p>
+      <p style="font-size: 0.9rem; color: #725b52; margin-bottom: 0.8rem;">Find all matching stickers to unlock the secret letter!</p>
 
       <div class="game-board" id="gameBoard"></div>
 
@@ -549,8 +687,13 @@
       </div>
     </div>
 
-    <!-- PAGE 4: Bible Verse & Letter -->
+    <!-- PAGE 4: Bible Verse & Telugu/English Letter -->
     <div class="book-page" id="page4" style="text-align: center;">
+      <div class="filigree-corner fc-tl"></div>
+      <div class="filigree-corner fc-tr"></div>
+      <div class="filigree-corner fc-bl"></div>
+      <div class="filigree-corner fc-br"></div>
+
       <h2 class="timeline-title">Happy Birthday, Jennie! 🎉</h2>
       
       <!-- Bible Verse Card -->
@@ -562,6 +705,7 @@
       <!-- Handwritten Typing Letter -->
       <div class="letter-body">
         <span id="typewriterText"></span>
+        <div class="letter-stamp">forever & always ♾️</div>
       </div>
 
       <div class="btn-group">
@@ -581,25 +725,22 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Interactive Photo Tap: Heart Burst & Pulse Animation
     function popPhoto(e, element) {
       element.classList.remove('pulse-effect');
-      void element.offsetWidth; // Force reflow
+      void element.offsetWidth;
       element.classList.add('pulse-effect');
 
-      // Mini Confetti burst around the photo
       const rect = element.getBoundingClientRect();
       const x = (rect.left + rect.width / 2) / window.innerWidth;
       const y = (rect.top + rect.height / 2) / window.innerHeight;
 
       confetti({
-        particleCount: 22,
-        spread: 45,
+        particleCount: 25,
+        spread: 50,
         origin: { x: x, y: y },
-        colors: ['#ff4d6d', '#ff758f', '#c69a53', '#ffffff']
+        colors: ['#c06371', '#f3c2ba', '#d4a359', '#ffffff']
       });
 
-      // Floating Heart Emoji Spawn
       const hearts = ['💖', '✨', '🌸', '🫶', '💕'];
       const heart = document.createElement('div');
       heart.className = 'floating-heart';
@@ -613,15 +754,15 @@
 
     function triggerPartyPoppers() {
       confetti({
-        particleCount: 75,
+        particleCount: 85,
         angle: 60,
-        spread: 65,
+        spread: 70,
         origin: { x: 0, y: 0.85 }
       });
       confetti({
-        particleCount: 75,
+        particleCount: 85,
         angle: 120,
-        spread: 65,
+        spread: 70,
         origin: { x: 1, y: 0.85 }
       });
     }
