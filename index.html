@@ -2,210 +2,216 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Story of Jenieeee</title>
   
-  <!-- Use a charming, slightly retro font for a scrapbook feel -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=Poppins:wght@400;600&family=Shrikhand&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      /* Palette based on user's Rose Cream requirement and the visual reference image */
-      --bg: #F9F1E7; /* Light cream/parchment background */
-      --book-cover-bg: #EAE2D1; /* Slightly darker cream for the book surface */
-      --book-text: #B7717A; /* Faded rose pink for main text */
-      --secondary: #D4AF37; /* Faded gold for accents like the subtitle and latch */
-      --storm-color: #92E8FD; /* Bright electric blue for the storm effect */
-      --font-display: 'Shrikhand', cursive;
-      --font-body: 'Open Sans', sans-serif;
+      --bg: #1a1617;
+      --cover-base: #f5eedc;
+      --cover-edge: #dfd2b8;
+      --rose: #b75d69;
+      --rose-dark: #8c3b47;
+      --gold: #c69a53;
+      --spark: #9de2ff;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23b75d69' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") 12 12, auto !important;
     }
 
     body {
-      background-color: var(--bg);
-      font-family: var(--font-body);
-      color: #555;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: radial-gradient(circle at center, #2e2628 0%, #151213 100%);
       min-height: 100vh;
-      overflow: hidden; /* Lock the screen for this introductory page */
-      cursor: crosshair; /* Default cursor before setting the special heart one */
-    }
-
-    /* 1. Heart Shape Cursor (Global) */
-    body, .container, .book-cover {
-      /* Replaces default cursor with a simple black heart shape */
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23B7717A' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") 12 12, auto;
-    }
-
-    .container {
-      width: 100%;
-      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      padding: 1.5rem;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
     }
 
-    /* 2. Book Cover Styling (Matches image texture and palette) */
-    .book-cover {
-      width: 80%;
+    /* Wooden Table Desk Surface */
+    .desk {
+      width: 100%;
       max-width: 900px;
-      aspect-ratio: 16 / 9; /* Matches typical image composition */
-      background-color: var(--book-cover-bg);
-      background-image: 
-        /* Subtle parchment/leather texture */
-        radial-gradient(#E5DBC8 1px, transparent 1px),
-        /* Vintage rose embossed borders (simulated with SVG and shadows) */
-        linear-gradient(var(--book-text) 30%, transparent 30%),
-        linear-gradient(90deg, var(--book-text) 30%, transparent 30%);
-      background-size: 20px 20px, 100% 4px, 4px 100%;
-      background-position: 0 0, 0 0, 0 0;
-      background-repeat: repeat, repeat-x, repeat-y;
-      
-      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    /* Vintage Book Cover */
+    .book {
+      position: relative;
+      width: 100%;
+      max-width: 780px;
+      aspect-ratio: 16 / 10;
+      background: linear-gradient(135deg, var(--cover-base) 0%, var(--cover-edge) 100%);
+      border-radius: 12px 24px 24px 12px;
       padding: 3rem;
-      box-shadow: 
-        10px 10px 30px rgba(119, 114, 100, 0.2), /* Subtle dark shadow */
-        -10px -10px 30px rgba(255, 253, 245, 0.4); /* Subtle light shadow for embossing effect */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
-      overflow: hidden; /* Keep the storm effect contained */
-      
-      /* Simulating the brass latch on the side */
-      border-right: 15px solid var(--secondary);
+      text-align: center;
+      box-shadow: 
+        -12px 0 25px rgba(0, 0, 0, 0.6),
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 5px 0 15px rgba(0, 0, 0, 0.15),
+        inset -2px 0 6px rgba(255, 255, 255, 0.6);
+      border-left: 18px solid #9c7348;
     }
 
-    /* 3. "HY Jenieeeee" Text & Storm Effect */
-    .title-wrapper {
+    /* Embossed Vintage Border */
+    .book-border {
+      position: absolute;
+      inset: 18px;
+      border: 2px solid var(--rose);
+      border-radius: 8px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .book-border::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed var(--gold);
+      border-radius: 4px;
+    }
+
+    /* Floral Corner Accents */
+    .corner {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      font-size: 1.6rem;
+      line-height: 1;
+      opacity: 0.65;
+    }
+    .top-left { top: 26px; left: 26px; }
+    .top-right { top: 26px; right: 26px; }
+    .bottom-left { bottom: 26px; left: 26px; }
+    .bottom-right { bottom: 26px; right: 26px; }
+
+    /* Title & Lightning / Storm Glow */
+    .title-box {
       position: relative;
       display: inline-block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      z-index: 2;
     }
 
-    .title {
-      font-family: var(--font-display);
-      font-size: 6rem;
-      color: var(--book-text);
-      letter-spacing: 0.2rem;
+    .main-title {
+      font-family: 'Shrikhand', cursive;
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      color: var(--rose-dark);
+      letter-spacing: 2px;
       position: relative;
-      z-index: 10;
       text-shadow: 
-        2px 2px 0px #fff,
-        4px 4px 0px rgba(183, 113, 122, 0.1);
+        2px 2px 0px rgba(255, 255, 255, 0.8),
+        0 0 18px rgba(157, 226, 255, 0.3);
+      animation: stormFlicker 4s infinite alternate;
     }
 
-    /* The "Storm" lightning strike element */
-    .storm-strike {
+    /* Electric Lightning Overlay */
+    .lightning {
       position: absolute;
-      width: 4px;
-      height: 100%;
-      background-color: var(--storm-color);
-      top: 0;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      z-index: 5; /* Behind the main text layer, in front of texture */
+      transform: translate(-50%, -50%);
+      width: 110%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(157, 226, 255, 0.35) 0%, transparent 70%);
+      filter: blur(8px);
+      pointer-events: none;
       opacity: 0;
-      filter: blur(2px);
-      box-shadow: 
-        0 0 10px var(--storm-color),
-        0 0 20px var(--storm-color);
+      animation: flashStrike 5s infinite;
     }
 
-    /* 4. Subtitle and Page Interaction */
+    /* Subtitle / Button */
     .subtitle {
-      font-family: var(--font-body);
-      font-size: 1.5rem;
-      color: var(--secondary);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.8vw, 1.45rem);
+      font-style: italic;
+      color: #5c4238;
+      margin-top: 0.5rem;
+      z-index: 2;
+    }
+
+    .open-tag {
+      margin-top: 1.8rem;
+      padding: 0.6rem 1.6rem;
+      background: rgba(183, 93, 105, 0.12);
+      border: 1px solid var(--rose);
+      color: var(--rose-dark);
+      border-radius: 50px;
+      font-size: 0.9rem;
       font-weight: 600;
-      letter-spacing: 0.1rem;
-      opacity: 0.8;
-      margin-top: 1rem;
-      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      z-index: 2;
     }
 
-    /* 5. Animations */
-    
-    /* Random Lightning Strike (Storm) Animation */
-    @keyframes lightningStrike {
-      0%, 94% { opacity: 0; height: 100%; top: 0; }
-      95% { opacity: 1; height: 120%; top: -10%; transform: translateX(-50%) rotate(-5deg); }
-      96% { opacity: 0; height: 100%; top: 0; transform: translateX(-50%) rotate(0deg); }
-      97% { opacity: 1; height: 120%; top: -10%; transform: translateX(-50%) rotate(5deg); }
-      98%, 100% { opacity: 0; height: 100%; top: 0; }
+    .open-tag:hover {
+      background: var(--rose);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(183, 93, 105, 0.35);
     }
 
-    /* Trigger the animation automatically for introductory effect */
-    .storm-strike {
-      animation: lightningStrike 6s ease-out infinite; /* Occasional strike */
+    /* Storm Keyframe Animations */
+    @keyframes stormFlicker {
+      0%, 88%, 93%, 100% {
+        text-shadow: 2px 2px 0px rgba(255,255,255,0.8), 0 0 10px rgba(157, 226, 255, 0.2);
+      }
+      90% {
+        color: #ffffff;
+        text-shadow: 0 0 25px #9de2ff, 0 0 45px #9de2ff;
+      }
+      92% {
+        color: var(--rose-dark);
+        text-shadow: 0 0 8px rgba(157, 226, 255, 0.3);
+      }
     }
 
-    /* Add a visual cue to interact/unlock the book */
-    .subtitle:hover {
-      opacity: 1;
-      text-decoration: underline;
+    @keyframes flashStrike {
+      0%, 89%, 94%, 100% { opacity: 0; }
+      90% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+      91% { opacity: 0.3; }
+      92% { opacity: 0.9; }
     }
-
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="book-cover">
-      
-      <!-- The main greeting with embedded storm effect -->
-      <div class="title-wrapper">
-        <h1 class="title">HY Jenieeeee</h1>
-        <div class="storm-strike"></div>
+  <div class="desk">
+    <div class="book">
+      <div class="book-border"></div>
+
+      <div class="corner top-left">🌸</div>
+      <div class="corner top-right">🌸</div>
+      <div class="corner bottom-left">🌸</div>
+      <div class="corner bottom-right">🌸</div>
+
+      <div class="title-box">
+        <div class="lightning"></div>
+        <h1 class="main-title">HY Jenieeeee</h1>
       </div>
-      
-      <!-- Subtitle/Call to Action -->
-      <p class="subtitle" id="book-subtitle" onclick="unlockBook()">Chapter One: The First Spark</p>
-      
+
+      <p class="subtitle">Chapter One: The First Spark</p>
+      <div class="open-tag" onclick="alert('Opening Page 2...')">Open Storybook ✨</div>
     </div>
   </div>
-
-  <script>
-    function unlockBook() {
-      // Future Page 2 Transition Logic goes here.
-      alert('The story begins... turning to Page 2 (Photos/Childhood)!');
-    }
-    
-    // Add a randomized delay to the lightning for a natural storm feel
-    const strike = document.querySelector('.storm-strike');
-    function setRandomStrike() {
-        const randomDelay = Math.random() * 4000 + 2000; // 2 to 6 seconds delay
-        setTimeout(() => {
-            strike.style.animation = 'lightningStrike 0.4s ease-out';
-            
-            // Clean up animation to allow re-trigger
-            setTimeout(() => {
-                strike.style.animation = 'none';
-                setRandomStrike(); // Schedule the next one
-            }, 400); 
-
-        }, randomDelay);
-    }
-    
-    // Initially replace the infinite animation with the randomized one
-    // window.addEventListener('load', () => {
-    //    strike.style.animation = 'none';
-    //    setRandomStrike();
-    // });
-
-  </script>
 
 </body>
 </html>
