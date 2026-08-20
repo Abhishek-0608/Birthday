@@ -13,7 +13,7 @@
   <style>
     :root {
       --cream: #faf5ee;
-      --paper: #f4ece1;
+      --paper: #f7f1e7;
       --rose: #b75d69;
       --rose-dark: #8c3b47;
       --rose-light: #e8a598;
@@ -39,9 +39,27 @@
       position: relative;
     }
 
+    /* Floating ambient flower petals */
+    .petal {
+      position: fixed;
+      top: -10%;
+      font-size: 1.4rem;
+      user-select: none;
+      pointer-events: none;
+      animation: drift linear infinite;
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    /* Desk Wrapper */
     .desk {
       width: 100%;
-      max-width: 820px;
+      max-width: 860px;
       position: relative;
       z-index: 10;
     }
@@ -50,15 +68,19 @@
     .book-page {
       display: none;
       background: var(--paper);
-      border-radius: 16px;
-      padding: 2.5rem 2rem;
+      background-image: 
+        radial-gradient(#e7dec8 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px);
+      background-size: 24px 24px, 100% 28px;
+      border-radius: 20px;
+      padding: 2.8rem 2.2rem;
       box-shadow: 
-        -10px 0 25px rgba(0, 0, 0, 0.5),
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        inset 0 0 40px rgba(183, 93, 105, 0.08);
+        -12px 0 30px rgba(0, 0, 0, 0.55),
+        0 25px 50px rgba(0, 0, 0, 0.45),
+        inset 0 0 50px rgba(183, 93, 105, 0.08);
       position: relative;
       border: 1px solid rgba(198, 154, 83, 0.4);
-      animation: pageTurn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: pageTurn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .book-page.active {
@@ -66,19 +88,20 @@
     }
 
     @keyframes pageTurn {
-      from { opacity: 0; transform: rotateY(-8deg) scale(0.97); }
-      to { opacity: 1; transform: rotateY(0deg) scale(1); }
+      from { opacity: 0; transform: perspective(1000px) rotateY(-12deg) scale(0.95); }
+      to { opacity: 1; transform: perspective(1000px) rotateY(0deg) scale(1); }
     }
 
-    /* Page 1 Specifics */
+    /* Page 1 - Book Cover */
     .cover-style {
       text-align: center;
-      min-height: 480px;
+      min-height: 500px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border-left: 16px solid #8c5835;
+      border-left: 20px solid #8c5835;
+      border-radius: 12px 24px 24px 12px;
     }
 
     .title-box {
@@ -89,7 +112,7 @@
 
     .main-title {
       font-family: 'Shrikhand', cursive;
-      font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+      font-size: clamp(2.6rem, 7vw, 4.6rem);
       color: var(--rose-dark);
       letter-spacing: 2px;
       position: relative;
@@ -102,10 +125,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 120%;
-      height: 140%;
-      background: radial-gradient(circle, rgba(157, 226, 255, 0.45) 0%, transparent 70%);
-      filter: blur(8px);
+      width: 125%;
+      height: 145%;
+      background: radial-gradient(circle, rgba(157, 226, 255, 0.5) 0%, transparent 70%);
+      filter: blur(10px);
       pointer-events: none;
       opacity: 0;
       animation: flashStrike 5s infinite;
@@ -119,11 +142,11 @@
       margin-top: 0.5rem;
     }
 
-    /* Buttons */
+    /* Action Buttons */
     .scrap-btn {
       margin-top: 2rem;
-      padding: 0.8rem 2rem;
-      background: var(--rose);
+      padding: 0.85rem 2.2rem;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
       border: none;
       color: #fff;
       border-radius: 50px;
@@ -131,14 +154,14 @@
       font-weight: 600;
       letter-spacing: 1px;
       text-transform: uppercase;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 6px 16px rgba(183, 93, 105, 0.35);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(183, 93, 105, 0.35);
       cursor: pointer;
     }
 
     .scrap-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(183, 93, 105, 0.5);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 26px rgba(183, 93, 105, 0.5);
     }
 
     /* Polaroids Layout (Page 2) */
@@ -146,25 +169,33 @@
       font-family: 'Playfair Display', serif;
       color: var(--rose-dark);
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
+      font-size: 2.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #7d6b5c;
+      margin-bottom: 2rem;
     }
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.8rem;
       margin: 1.5rem 0;
     }
 
     .polaroid {
       background: #fff;
-      padding: 10px 10px 20px 10px;
+      padding: 12px 12px 22px 12px;
       border-radius: 4px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.12);
       text-align: center;
       position: relative;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.04);
     }
 
     .polaroid:nth-child(1) { transform: rotate(-3deg); }
@@ -172,106 +203,153 @@
     .polaroid:nth-child(3) { transform: rotate(-2deg); }
 
     .polaroid:hover {
-      transform: scale(1.05) rotate(0deg);
+      transform: scale(1.06) rotate(0deg);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.2);
       z-index: 5;
     }
 
     .polaroid img {
       width: 100%;
-      height: 180px;
+      height: 200px;
       object-fit: cover;
-      border-radius: 2px;
-      background: #eee;
+      border-radius: 3px;
+      background: #f0ebe1;
     }
 
     .washi-tape {
       position: absolute;
-      top: -10px;
-      left: 35%;
-      width: 60px;
-      height: 18px;
-      background: rgba(232, 165, 152, 0.7);
-      transform: rotate(-2deg);
-      border-left: 2px dashed rgba(255,255,255,0.5);
-      border-right: 2px dashed rgba(255,255,255,0.5);
+      top: -12px;
+      left: 32%;
+      width: 70px;
+      height: 20px;
+      background: rgba(232, 165, 152, 0.8);
+      transform: rotate(-3deg);
+      border-left: 2px dashed rgba(255,255,255,0.6);
+      border-right: 2px dashed rgba(255,255,255,0.6);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    .sticker-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      font-size: 1.2rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
     }
 
     .caption {
       font-family: 'Caveat', cursive;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       color: #333;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     /* Mini Game (Page 3) */
     .game-board {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      max-width: 360px;
+      gap: 12px;
+      max-width: 380px;
       margin: 1.5rem auto;
     }
 
     .card-tile {
       aspect-ratio: 1;
-      background: #dfd2b8;
+      background: linear-gradient(135deg, #eaddc7 0%, #dfd0b5 100%);
       border: 2px solid var(--gold);
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.8rem;
+      font-size: 2rem;
       user-select: none;
       cursor: pointer;
-      transition: transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .card-tile:hover {
+      transform: translateY(-2px);
     }
 
     .card-tile.flipped {
-      background: #fff;
+      background: #ffffff;
+      transform: rotateY(180deg);
     }
 
-    /* Final Letter (Page 4) */
+    /* Page 4 - Bible Verse Card */
+    .bible-verse-box {
+      background: rgba(255, 255, 255, 0.85);
+      border-left: 4px solid var(--rose);
+      border-right: 4px solid var(--rose);
+      padding: 1.4rem 1.6rem;
+      border-radius: 10px;
+      margin-bottom: 1.6rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--rose-dark);
+      line-height: 1.7;
+      box-shadow: 0 6px 16px rgba(183, 93, 105, 0.08);
+      position: relative;
+    }
+
+    .bible-verse-ref {
+      display: block;
+      margin-top: 0.6rem;
+      font-family: 'Poppins', sans-serif;
+      font-style: normal;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* Final Letter */
     .letter-body {
-      background: rgba(255, 255, 255, 0.7);
-      padding: 1.8rem;
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 14px;
       font-family: 'Caveat', cursive;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       line-height: 1.8;
       color: var(--text);
       border: 1px dashed var(--rose);
       margin-bottom: 1.5rem;
       text-align: left;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
     }
 
-    /* Floating Balloons */
+    /* Floating Heart Balloons */
     .balloon {
       position: fixed;
-      bottom: -100px;
-      font-size: 2.5rem;
-      animation: floatUp 8s linear infinite;
-      z-index: 1;
+      bottom: -120px;
+      font-size: 2.8rem;
+      animation: floatUp 8s ease-in infinite;
+      z-index: 2;
       pointer-events: none;
     }
 
-    .b-left-1 { left: 5%; animation-delay: 0s; }
-    .b-left-2 { left: 12%; animation-delay: 3s; }
-    .b-right-1 { right: 5%; animation-delay: 1.5s; }
-    .b-right-2 { right: 12%; animation-delay: 4.5s; }
+    .b-left-1 { left: 4%; animation-delay: 0s; }
+    .b-left-2 { left: 10%; animation-delay: 3.5s; font-size: 2.2rem; }
+    .b-right-1 { right: 4%; animation-delay: 1.8s; }
+    .b-right-2 { right: 10%; animation-delay: 5s; font-size: 2.4rem; }
 
     @keyframes floatUp {
       0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+      100% { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
     }
 
+    /* Storm Keyframe Animations */
     @keyframes stormFlicker {
       0%, 88%, 93%, 100% {
         color: var(--rose-dark);
-        text-shadow: 2px 2px 0px rgba(255,255,255,0.8), 0 0 10px rgba(157, 226, 255, 0.2);
+        text-shadow: 2px 2px 0px rgba(255,255,255,0.8), 0 0 12px rgba(157, 226, 255, 0.2);
       }
       90% {
         color: #ffffff;
-        text-shadow: 0 0 25px #9de2ff, 0 0 45px #9de2ff;
+        text-shadow: 0 0 25px #9de2ff, 0 0 50px #9de2ff;
       }
       92% {
         color: var(--rose-dark);
@@ -281,7 +359,7 @@
 
     @keyframes flashStrike {
       0%, 89%, 94%, 100% { opacity: 0; }
-      90% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+      90% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
       91% { opacity: 0.2; }
       92% { opacity: 0.85; }
     }
@@ -289,7 +367,13 @@
 </head>
 <body>
 
-  <!-- Floating Heart Balloons (Side Decorations) -->
+  <!-- Floating Falling Ambient Petals -->
+  <div class="petal" style="left: 15%; animation-duration: 9s; animation-delay: 0s;">🌸</div>
+  <div class="petal" style="left: 35%; animation-duration: 12s; animation-delay: 2s;">✨</div>
+  <div class="petal" style="left: 65%; animation-duration: 10s; animation-delay: 4s;">🌸</div>
+  <div class="petal" style="left: 85%; animation-duration: 11s; animation-delay: 1s;">✨</div>
+
+  <!-- Rising Balloons & Icons -->
   <div class="balloon b-left-1">🎈</div>
   <div class="balloon b-left-2">💖</div>
   <div class="balloon b-right-1">🎈</div>
@@ -310,26 +394,30 @@
     <!-- PAGE 2: The Photo Timeline (Childhood to Present) -->
     <div class="book-page" id="page2">
       <h2 class="timeline-title">From Little Steps to Now 🌸</h2>
+      <p class="timeline-subtitle">Every chapter of you gets brighter and brighter.</p>
       
       <div class="gallery-grid">
         <!-- Childhood Polaroid -->
         <div class="polaroid">
           <div class="washi-tape"></div>
-          <img src="https://images.unsplash.com/photo-1543332164-6e82f355badc?auto=format&fit=crop&w=400&q=80" alt="Childhood Memory">
+          <img src="childhood.jpg" onerror="this.src='https://images.unsplash.com/photo-1543332164-6e82f355badc?auto=format&fit=crop&w=400&q=80'" alt="Childhood Memory">
+          <span class="sticker-badge">🧸</span>
           <p class="caption">Baby days & sweet smiles ✨</p>
         </div>
 
         <!-- Growing Up Polaroid -->
         <div class="polaroid">
           <div class="washi-tape"></div>
-          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Growing Up Memory">
-          <p class="caption">Growing brighter every day 🌿</p>
+          <img src="growing.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80'" alt="Growing Up Memory">
+          <span class="sticker-badge">🌿</span>
+          <p class="caption">Growing brighter every day 💫</p>
         </div>
 
         <!-- Present Day Polaroid -->
         <div class="polaroid">
           <div class="washi-tape"></div>
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Present Day Memory">
+          <img src="present.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'" alt="Present Day Memory">
+          <span class="sticker-badge">👑</span>
           <p class="caption">The wonderful you today 💖</p>
         </div>
       </div>
@@ -341,28 +429,37 @@
 
     <!-- PAGE 3: Memory Match Mini-Game -->
     <div class="book-page" id="page3" style="text-align: center;">
-      <h2 class="timeline-title">Unlock Your Birthday Gift 🎁</h2>
-      <p style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">Match all pairs to unlock the birthday letter!</p>
+      <h2 class="timeline-title">Unlock Your Birthday Note 🎁</h2>
+      <p style="font-size: 0.95rem; color: #666; margin-bottom: 1rem;">Find all matching scrapbook stickers to unlock the secret letter!</p>
 
       <div class="game-board" id="gameBoard"></div>
 
-      <div id="gameUnlock" style="display: none; margin-top: 1rem;">
-        <button class="scrap-btn" onclick="nextPage(4); triggerPartyPoppers();">Read Birthday Note 💌</button>
+      <div id="gameUnlock" style="display: none; margin-top: 1.2rem;">
+        <button class="scrap-btn" onclick="nextPage(4); triggerPartyPoppers();">Open Birthday Note 💌</button>
       </div>
     </div>
 
-    <!-- PAGE 4: Heartfelt Letter & Finale -->
+    <!-- PAGE 4: Bible Verse, Letter & Celebration -->
     <div class="book-page" id="page4" style="text-align: center;">
       <h2 class="timeline-title">Happy Birthday, Jenie! 🎉</h2>
       
+      <!-- Bible Verse Card -->
+      <div class="bible-verse-box">
+        “The Lord bless you and keep you; the Lord make his face shine on you and be gracious to you; the Lord turn his face toward you and give you peace.”
+        <span class="bible-verse-ref">— Numbers 6:24-26</span>
+      </div>
+
+      <!-- Final Letter -->
       <div class="letter-body">
         Dearest Jenie,<br><br>
-        Looking back at every moment from childhood until today, you have brought so much light, laughter, and calm everywhere you go. 
-        Thank you for being such an extraordinary part of my life. May this new year bring you endless happiness, boundless adventures, and everything your heart dreams of.<br><br>
+        Looking back across every memory—from the earliest smiles to everything you are today—you have brought so much light, peace, and beauty into every day.
+        <br><br>
+        Thank you for being uniquely, wonderfully you. May God richly bless this year with endless happiness, true peace, exciting new adventures, and all the quiet wishes of your heart.
+        <br><br>
         Happy Birthday! 🎂✨
       </div>
 
-      <button class="scrap-btn" onclick="triggerPartyPoppers()">Crack More Poppers 🎊</button>
+      <button class="scrap-btn" onclick="triggerPartyPoppers()">Crack Poppers Again 🎊</button>
       <button class="scrap-btn" style="background: transparent; color: var(--rose); border: 1px solid var(--rose); margin-left: 8px;" onclick="nextPage(1)">Read Again ↺</button>
     </div>
 
@@ -378,19 +475,20 @@
 
     function triggerPartyPoppers() {
       confetti({
-        particleCount: 80,
+        particleCount: 90,
         angle: 60,
-        spread: 70,
+        spread: 75,
         origin: { x: 0, y: 0.8 }
       });
       confetti({
-        particleCount: 80,
+        particleCount: 90,
         angle: 120,
-        spread: 70,
+        spread: 75,
         origin: { x: 1, y: 0.8 }
       });
     }
 
+    // Mini Match Game
     var icons = ['🌸', '✨', '🎂', '💌'];
     var cards = icons.concat(icons).sort(function() { return Math.random() - 0.5; });
     var gameBoard = document.getElementById('gameBoard');
@@ -424,7 +522,7 @@
                 });
               }
               flippedCards = [];
-            }, 600);
+            }, 550);
           }
         }
       });
