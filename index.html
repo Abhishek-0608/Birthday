@@ -13,7 +13,7 @@
   <style>
     :root {
       --cream: #faf5ee;
-      --paper: #f9f3eb;
+      --paper: #fbf7f0;
       --rose: #b75d69;
       --rose-dark: #8c3b47;
       --rose-light: #e8a598;
@@ -31,65 +31,64 @@
     body {
       background: radial-gradient(circle at center, #2e2425 0%, #151011 100%);
       min-height: 100vh;
-      min-height: -webkit-fill-available;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 1rem;
+      align-items: flex-start;
+      padding: 1rem 0.75rem 2.5rem;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
-      position: relative;
     }
 
-    /* Ambient floating petals */
+    /* Ambient Floating Petals (Hidden on small mobile screens to prevent clutter) */
     .petal {
       position: fixed;
       top: -10%;
-      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-size: 1.2rem;
       user-select: none;
       pointer-events: none;
       animation: drift linear infinite;
       z-index: 1;
-      opacity: 0.55;
+      opacity: 0.45;
+    }
+
+    @media (max-width: 600px) {
+      .petal:nth-child(2), .petal:nth-child(3) { display: none; }
     }
 
     @keyframes drift {
-      0% { transform: translateY(0) rotate(0deg) translateX(0); }
-      50% { transform: translateY(50vh) rotate(180deg) translateX(15px); }
-      100% { transform: translateY(110vh) rotate(360deg) translateX(-15px); }
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
     }
 
-    /* Floating side balloons */
+    /* Rising Balloons */
     .balloon {
       position: fixed;
       bottom: -100px;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
       animation: floatUp 8.5s ease-in infinite;
       z-index: 2;
       pointer-events: none;
+      opacity: 0.8;
     }
 
     .b-left-1 { left: 2%; animation-delay: 0s; }
-    .b-left-2 { left: 8%; animation-delay: 3.5s; font-size: clamp(1.4rem, 3vw, 2.2rem); }
-    .b-right-1 { right: 2%; animation-delay: 1.8s; }
-    .b-right-2 { right: 8%; animation-delay: 5s; font-size: clamp(1.5rem, 3.2vw, 2.4rem); }
+    .b-right-1 { right: 2%; animation-delay: 2s; }
 
     @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
       100% { transform: translateY(-115vh) rotate(20deg); opacity: 0; }
     }
 
-    /* Scrapbook Core Layout */
+    /* Main Container */
     .desk {
       width: 100%;
-      max-width: 840px;
+      max-width: 760px;
       position: relative;
       z-index: 10;
-      display: flex;
-      justify-content: center;
       margin: auto;
     }
 
+    /* Scrapbook Page Container */
     .book-page {
       display: none;
       width: 100%;
@@ -97,16 +96,14 @@
       background-image: 
         radial-gradient(#e5dbcb 1px, transparent 1px),
         linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
-      background-size: 20px 20px, 100% 24px;
-      border-radius: 20px;
-      padding: clamp(1.5rem, 4vw, 2.8rem) clamp(1.2rem, 3vw, 2.2rem);
+      background-size: 20px 20px, 100% 26px;
+      border-radius: 16px;
+      padding: 1.8rem 1.1rem;
       box-shadow: 
-        -10px 0 25px rgba(0, 0, 0, 0.5),
-        0 20px 45px rgba(0, 0, 0, 0.4),
-        inset 0 0 40px rgba(183, 93, 105, 0.08);
-      position: relative;
-      border: 1px solid rgba(198, 154, 83, 0.45);
-      animation: flipIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        0 15px 35px rgba(0, 0, 0, 0.45),
+        inset 0 0 30px rgba(183, 93, 105, 0.05);
+      border: 1px solid rgba(198, 154, 83, 0.4);
+      animation: flipIn 0.5s ease-out forwards;
     }
 
     .book-page.active {
@@ -114,33 +111,34 @@
     }
 
     @keyframes flipIn {
-      from { opacity: 0; transform: scale(0.96) translateY(10px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Cover Page */
+    /* Page 1: Cover Page */
     .cover-style {
       text-align: center;
-      min-height: clamp(420px, 60vh, 520px);
+      min-height: 480px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border-left: clamp(12px, 2.5vw, 20px) solid #7d4928;
-      border-radius: 12px 20px 20px 12px;
+      border-left: 12px solid #7d4928;
+      border-radius: 10px 16px 16px 10px;
       position: relative;
+      padding: 3rem 1.2rem;
     }
 
     .cover-ribbon {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 14px;
+      right: 14px;
       background: var(--gold);
       color: #fff;
-      font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+      font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 1px;
-      padding: 0.3rem 0.8rem;
+      padding: 0.3rem 0.75rem;
       border-radius: 50px;
       text-transform: uppercase;
     }
@@ -148,18 +146,18 @@
     .title-box {
       position: relative;
       display: inline-block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
       width: 100%;
-      word-break: break-word;
     }
 
     .main-title {
       font-family: 'Shrikhand', cursive;
-      font-size: clamp(2.2rem, 7vw, 4.4rem);
-      line-height: 1.2;
+      font-size: clamp(2.4rem, 8.5vw, 4.2rem);
+      line-height: 1.15;
       color: var(--rose-dark);
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       position: relative;
+      word-break: break-word;
       text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.9);
       animation: stormFlicker 4.5s infinite alternate;
     }
@@ -180,19 +178,19 @@
 
     .subtitle {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-size: clamp(1rem, 3vw, 1.25rem);
       font-style: italic;
       color: #5c4238;
-      margin-top: 0.4rem;
+      margin-top: 0.5rem;
     }
 
     /* Wax Seal Button */
     .wax-seal {
-      margin-top: 1.8rem;
+      margin-top: 2rem;
       background: radial-gradient(circle, #b83b4b 0%, #821c2a 100%);
       color: #ffd6dc;
-      width: clamp(70px, 15vw, 85px);
-      height: clamp(70px, 15vw, 85px);
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       border: 3px dashed rgba(255, 214, 220, 0.4);
       display: flex;
@@ -200,97 +198,108 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(130, 28, 42, 0.45);
+      box-shadow: 0 6px 18px rgba(130, 28, 42, 0.45);
       transition: transform 0.2s ease;
     }
 
     .wax-seal:active {
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
     .wax-seal span {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       line-height: 1;
     }
 
     .wax-seal small {
-      font-size: 0.6rem;
+      font-size: 0.62rem;
       font-weight: bold;
       letter-spacing: 1px;
       margin-top: 2px;
       text-transform: uppercase;
     }
 
-    /* Scrapbook Action Buttons */
+    /* Shared Button Styling */
     .scrap-btn {
-      margin-top: 1.5rem;
-      padding: clamp(0.7rem, 2vw, 0.85rem) clamp(1.4rem, 4vw, 2rem);
+      width: 100%;
+      max-width: 280px;
+      margin: 1.8rem auto 0;
+      padding: 0.85rem 1.6rem;
       background: linear-gradient(135deg, var(--rose), var(--rose-dark));
       border: none;
       color: #fff;
       border-radius: 50px;
-      font-size: clamp(0.85rem, 2vw, 0.95rem);
+      font-size: 0.95rem;
       font-weight: 600;
       letter-spacing: 0.5px;
       text-transform: uppercase;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 6px 18px rgba(183, 93, 105, 0.35);
+      box-shadow: 0 6px 16px rgba(183, 93, 105, 0.35);
       cursor: pointer;
+      display: block;
     }
 
     .scrap-btn:active {
       transform: scale(0.97);
     }
 
-    /* Page Titles & Subtitles */
+    /* Titles & Subtitles */
     .timeline-title {
       font-family: 'Playfair Display', serif;
       color: var(--rose-dark);
       text-align: center;
-      font-size: clamp(1.5rem, 4.5vw, 2.1rem);
-      margin-bottom: 0.3rem;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      margin-bottom: 0.4rem;
     }
 
     .timeline-subtitle {
       text-align: center;
-      font-size: clamp(0.8rem, 2vw, 0.95rem);
+      font-size: 0.88rem;
       color: #7d6b5c;
       margin-bottom: 1.5rem;
     }
 
-    /* Polaroids Layout (Mobile + iPad Responsive Grid) */
+    /* Polaroids Flow - Spacious Single Column on Mobile */
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.4rem;
-      margin: 1.2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+      max-width: 320px;
+      margin: 1.2rem auto 0.5rem;
     }
 
-    @media (max-width: 600px) {
+    @media (min-width: 650px) {
       .gallery-grid {
-        grid-template-columns: 1fr;
-        max-width: 280px;
-        margin: 1.2rem auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+        gap: 1.2rem;
       }
     }
 
     .polaroid {
       background: #fff;
-      padding: 10px 10px 18px 10px;
+      padding: 12px 12px 20px;
       border-radius: 4px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
       text-align: center;
       position: relative;
-      border: 1px solid rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.06);
     }
 
     .polaroid img {
       width: 100%;
-      height: clamp(180px, 30vw, 210px);
+      height: 240px;
       object-fit: cover;
       border-radius: 2px;
       background: #f0ebe1;
       display: block;
+    }
+
+    @media (min-width: 650px) {
+      .polaroid img {
+        height: 180px;
+      }
     }
 
     .washi-tape {
@@ -307,24 +316,24 @@
     .sticker-badge {
       position: absolute;
       bottom: 6px;
-      right: 6px;
-      font-size: 1.15rem;
+      right: 8px;
+      font-size: 1.2rem;
     }
 
     .caption {
       font-family: 'Caveat', cursive;
-      font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+      font-size: 1.25rem;
       color: #333;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
-    /* Mini Game Grid */
+    /* Page 3: Mini Game */
     .game-board {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: clamp(8px, 2vw, 12px);
-      max-width: clamp(260px, 80vw, 360px);
-      margin: 1.2rem auto;
+      gap: 10px;
+      max-width: 290px;
+      margin: 1.5rem auto;
     }
 
     .card-tile {
@@ -335,7 +344,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-size: 1.6rem;
       user-select: none;
       cursor: pointer;
       box-shadow: 0 4px 8px rgba(0,0,0,0.08);
@@ -346,17 +355,17 @@
       background: #ffffff;
     }
 
-    /* Bible Verse Box */
+    /* Page 4: Bible Verse & Letter */
     .bible-verse-box {
       background: rgba(255, 255, 255, 0.9);
       border-left: 3px solid var(--rose);
       border-right: 3px solid var(--rose);
-      padding: clamp(1rem, 2.5vw, 1.3rem);
+      padding: 1.1rem 1rem;
       border-radius: 8px;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+      font-size: 0.95rem;
       color: var(--rose-dark);
       line-height: 1.6;
       text-align: center;
@@ -367,20 +376,19 @@
       margin-top: 0.4rem;
       font-family: 'Poppins', sans-serif;
       font-style: normal;
-      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      font-size: 0.78rem;
       font-weight: 600;
       letter-spacing: 1px;
       color: var(--gold);
       text-transform: uppercase;
     }
 
-    /* Letter Body */
     .letter-body {
-      background: rgba(255, 255, 255, 0.92);
-      padding: clamp(1.2rem, 3vw, 1.8rem);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 1.4rem 1.1rem;
       border-radius: 12px;
       font-family: 'Caveat', cursive;
-      font-size: clamp(1.15rem, 2.6vw, 1.4rem);
+      font-size: 1.25rem;
       line-height: 1.7;
       color: var(--text);
       border: 1px dashed var(--rose);
@@ -389,7 +397,14 @@
       min-height: 160px;
     }
 
-    /* Keyframe Animations */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* Keyframes */
     @keyframes stormFlicker {
       0%, 88%, 93%, 100% {
         color: var(--rose-dark);
@@ -415,17 +430,13 @@
 </head>
 <body>
 
-  <!-- Ambient Falling Elements -->
+  <!-- Ambient Elements -->
   <div class="petal" style="left: 10%; animation-duration: 8s; animation-delay: 0s;">🌸</div>
-  <div class="petal" style="left: 30%; animation-duration: 11s; animation-delay: 2s;">✨</div>
-  <div class="petal" style="left: 70%; animation-duration: 9s; animation-delay: 4s;">🌸</div>
-  <div class="petal" style="left: 88%; animation-duration: 10s; animation-delay: 1s;">✨</div>
+  <div class="petal" style="left: 85%; animation-duration: 10s; animation-delay: 1s;">✨</div>
 
   <!-- Rising Balloons -->
   <div class="balloon b-left-1">🎈</div>
-  <div class="balloon b-left-2">💖</div>
-  <div class="balloon b-right-1">🎈</div>
-  <div class="balloon b-right-2">🌸</div>
+  <div class="balloon b-right-1">🌸</div>
 
   <div class="desk">
 
@@ -475,19 +486,17 @@
         </div>
       </div>
 
-      <div style="text-align: center;">
-        <button class="scrap-btn" onclick="nextPage(3)">Play Mini Game 🎮</button>
-      </div>
+      <button class="scrap-btn" onclick="nextPage(3)">Play Mini Game 🎮</button>
     </div>
 
     <!-- PAGE 3: Memory Match Mini-Game -->
     <div class="book-page" id="page3" style="text-align: center;">
       <h2 class="timeline-title">Unlock Your Birthday Note 🎁</h2>
-      <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Find all matching scrapbook stickers to unlock the secret letter!</p>
+      <p style="font-size: 0.88rem; color: #666; margin-bottom: 0.8rem;">Find all matching stickers to unlock the secret letter!</p>
 
       <div class="game-board" id="gameBoard"></div>
 
-      <div id="gameUnlock" style="display: none; margin-top: 1rem;">
+      <div id="gameUnlock" style="display: none;">
         <button class="scrap-btn" onclick="nextPage(4); triggerPartyPoppers(); typeWriterEffect();">Open Birthday Note 💌</button>
       </div>
     </div>
@@ -502,14 +511,14 @@
         <span class="bible-verse-ref">— Numbers 6:24-26</span>
       </div>
 
-      <!-- Animated Typing Letter -->
+      <!-- Handwritten Typing Letter -->
       <div class="letter-body">
         <span id="typewriterText"></span>
       </div>
 
-      <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
-        <button class="scrap-btn" onclick="triggerPartyPoppers()">Crack Poppers 🎊</button>
-        <button class="scrap-btn" style="background: transparent; color: var(--rose); border: 1px solid var(--rose);" onclick="nextPage(1)">Read Again ↺</button>
+      <div class="btn-group">
+        <button class="scrap-btn" style="margin-top: 0;" onclick="triggerPartyPoppers()">Crack Poppers 🎊</button>
+        <button class="scrap-btn" style="margin-top: 0; background: transparent; color: var(--rose); border: 1px solid var(--rose);" onclick="nextPage(1)">Read Again ↺</button>
       </div>
     </div>
 
@@ -526,16 +535,16 @@
 
     function triggerPartyPoppers() {
       confetti({
-        particleCount: 80,
+        particleCount: 75,
         angle: 60,
-        spread: 70,
-        origin: { x: 0, y: 0.8 }
+        spread: 65,
+        origin: { x: 0, y: 0.85 }
       });
       confetti({
-        particleCount: 80,
+        particleCount: 75,
         angle: 120,
-        spread: 70,
-        origin: { x: 1, y: 0.8 }
+        spread: 65,
+        origin: { x: 1, y: 0.85 }
       });
     }
 
